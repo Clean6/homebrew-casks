@@ -26,7 +26,7 @@ class Blackboardsync < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/e2/cc/abf6746cc90bc52df4ba730f301b89b3b844d6d526c7a61878694dccd598/urllib3-2.2.1.tar.gz"
+    url "https://pypi.io/packages/source/u/urllib3/urllib3-2.2.1.tar.gz"
     sha256 "d0570876c61ab9e520d776c38acbbb5b05a776d3f9ff98a5c8fd5162a444cf19"
   end
 
