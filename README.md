@@ -1,8 +1,8 @@
-# Clean6's Homebrew Casks
+# Clean6's Homebrew Tap
 
-This repository contains custom casks for [Homebrew](https://brew.sh).
+This repository contains custom formulae and casks for [Homebrew](https://brew.sh).
 
-## Available Casks
+## Available Formulae
 
 - `blackboardsync`: Command-line utility to sync Blackboard content
 
@@ -13,7 +13,7 @@ This repository contains custom casks for [Homebrew](https://brew.sh).
 brew tap Clean6/casks
 
 # Install BlackboardSync
-brew install --cask blackboardsync
+brew install blackboardsync
 ```
 
 ## Development
