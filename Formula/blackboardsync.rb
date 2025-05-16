@@ -16,7 +16,7 @@ class Blackboardsync < Formula
   end
 
   resource "requests" do
-    url "https://files.pythonhosted.org/packages/9d/be/10918a2eac4ae9f02f6cfe6414b7a155ccd8f7f9d4380b62918a991e0b99/requests-2.31.0.tar.gz"
+    url "https://pypi.io/packages/source/r/requests/requests-2.31.0.tar.gz"
     sha256 "942c5a758f98d790eaed1a29cb6eefc7ffb0d1cf7af05c3d2791656dbd6ad1e1"
   end
 
