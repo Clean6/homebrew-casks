@@ -1,2 +1,27 @@
-# Custom Homebrew Casks
-This tap contains custom casks for Homebrew.
+# Clean6's Homebrew Casks
+
+This repository contains custom casks for [Homebrew](https://brew.sh).
+
+## Available Casks
+
+- `blackboardsync`: Command-line utility to sync Blackboard content
+
+## Installation
+
+```bash
+# Add the tap
+brew tap Clean6/casks
+
+# Install BlackboardSync
+brew install --cask blackboardsync
+```
+
+## Development
+
+1. Create a new cask in the `Casks/` directory
+2. Test it locally with `brew install --cask Casks/your-cask.rb`
+3. Submit a pull request
+
+## License
+
+The casks in this repository are licensed under the MIT License.
