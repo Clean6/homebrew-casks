@@ -1,0 +1,90 @@
+name: Audit Casks
+
+on:
+  push:
+    paths:
+      - 'Casks/*.rb'
+  pull_request:
+    paths:
+      - 'Casks/*.rb'
+  schedule:
+    - cron: '0 0 * * *'  # Run daily at midnight UTC
+
+jobs:
+  style-check:
+    name: Style & Audit Check
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Cache Homebrew Bundler RubyGems
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.set-up-homebrew.outputs.gems-path }}
+          key: ${{ runner.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
+          restore-keys: ${{ runner.os }}-rubygems-
+
+      - name: Style check casks
+        run: |
+          failed=0
+          for cask in Casks/*.rb; do
+            if [ -f "$cask" ]; then
+              echo "::group::Style checking $cask"
+              if ! brew style "$cask"; then
+                failed=1
+                echo "::error file=$cask::Style check failed"
+              fi
+              echo "::endgroup::"
+            fi
+          done
+          exit $failed
+
+      - name: Audit casks
+        run: |
+          failed=0
+          for cask in Casks/*.rb; do
+            if [ -f "$cask" ]; then
+              echo "::group::Auditing $cask"
+              if ! brew audit --new-cask "$cask"; then
+                failed=1
+                echo "::error file=$cask::Audit failed"
+              fi
+              echo "::endgroup::"
+            fi
+          done
+          exit $failed
+
+  installation:
+    name: Installation Test
+    needs: style-check
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install casks
+        run: |
+          failed=0
+          for cask in Casks/*.rb; do
+            if [ -f "$cask" ]; then
+              echo "::group::Installing $cask"
+              if ! brew install --cask "$cask"; then
+                failed=1
+                echo "::error file=$cask::Installation failed"
+              else
+                echo "Successfully installed $(basename "$cask")"
+              fi
+              echo "::endgroup::"
+            fi
+          done
+          exit $failed
